@@ -25,5 +25,13 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "8a40249517a66d18d35756b1a23a4126fd6d82ad"
+  "gitHead": "8a40249517a66d18d35756b1a23a4126fd6d82ad",
+  "dependencies": {
+    "@uicu/cli-utils": "file:../utils",
+    "colors": "^1.4.0",
+    "commander": "^9.1.0",
+    "dotenv": "^16.0.0",
+    "root-check": "^1.0.0",
+    "semver": "^7.3.5"
+  }
 }

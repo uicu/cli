@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
-console.log('cli');
+// process.env.LC_ALL = 'en_us.js'
+require('../libs')();
