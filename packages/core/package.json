@@ -10,7 +10,7 @@
   "license": "ISC",
   "main": "bin/index.js",
   "bin": {
-    "uicu": "core/bin/index.js"
+    "uicu": "bin/index.js"
   },
   "directories": {
     "lib": "lib",
