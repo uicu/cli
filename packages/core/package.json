@@ -1,0 +1,25 @@
+{
+  "name": "@uicu/cli-core",
+  "version": "0.0.0",
+  "description": "uicu cli",
+  "keywords": [
+    "cli"
+  ],
+  "author": "uicu <738912168@qq.com>",
+  "homepage": "https://github.com/uicu/cli.git",
+  "license": "ISC",
+  "main": "bin/index.js",
+  "bin": {
+    "uicu": "core/bin/index.js"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
