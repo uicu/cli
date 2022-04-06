@@ -77,30 +77,30 @@ class Package {
   }
 
   async getVersion() {
-    // await this.prepare();
-    // return await this.exists() ? this.getPackage().version : null;
+    await this.prepare();
+    return await this.exists() ? this.getPackage().version : null;
   }
 
   async getLatestVersion() {
-    // const version = await this.getVersion();
-    // if (version) {
-    //   const latestVersion = await npm.getNpmLatestSemverVersion(this.packageName, version);
-    //   return latestVersion;
-    // }
-    // return null;
+    const version = await this.getVersion();
+    if (version) {
+      const latestVersion = await npm.getNpmLatestSemverVersion(this.packageName, version);
+      return latestVersion;
+    }
+    return null;
   }
 
   async update() {
-    // const latestVersion = await this.getLatestVersion();
-    // return npminstall({
-    //   root: this.targetPath,
-    //   storeDir: this.storePath,
-    //   registry: npm.getNpmRegistry(useOriginNpm),
-    //   pkgs: [{
-    //     name: this.packageName,
-    //     version: latestVersion,
-    //   }],
-    // });
+    const latestVersion = await this.getLatestVersion();
+    return npminstall({
+      root: this.targetPath,
+      storeDir: this.storePath,
+      registry: npm.getNpmRegistry(useOriginNpm),
+      pkgs: [{
+        name: this.packageName,
+        version: latestVersion,
+      }],
+    });
   }
 }
 

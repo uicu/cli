@@ -9,7 +9,8 @@ const {
   log, 
   locale, 
   npm,
-  Package
+  Package,
+  exec
 } = require('@uicu/cli-utils');
 const packageConfig = require('../package.json');
 const {
@@ -138,8 +139,8 @@ function registerCommand() {
     .option('--packagePath <packagePath>', '手动指定init包路径')
     .option('--force', '覆盖当前路径文件（谨慎使用）')
     .action(async (type, { packagePath, force }) => {
-      const packageName = 'uncle-burying-point';
-      const packageVersion = '0.0.24';
+      const packageName = '@uicu/cli-init';
+      const packageVersion = '0.0.4';
       await execCommand({ packagePath, packageName, packageVersion }, { type, force });
     });
   
@@ -196,29 +197,38 @@ async function execCommand({ packagePath, packageName, packageVersion }, extraOp
       }
       rootFile = initPackage.getRootFilePath();
     }
-    // const _config = Object.assign({}, config, extraOptions, {
-    //   debug: args.debug,
-    // });
-    // if (fs.existsSync(rootFile)) {
-    //   const code = `require('${rootFile}')(${JSON.stringify(_config)})`;
-    //   const p = exec('node', ['-e', code], { 'stdio': 'inherit' });
-    //   p.on('error', e => {
-    //     log.verbose('命令执行失败:', e);
-    //     handleError(e);
-    //     process.exit(1);
-    //   });
-    //   p.on('exit', c => {
-    //     log.verbose('命令执行成功:', c);
-    //     process.exit(c);
-    //   });
-    // } else {
-    //   throw new Error('入口文件不存在，请重试！');
-    // }
+    const _config = Object.assign({}, config, extraOptions, {
+      debug: args.debug,
+    });
+    if (fs.existsSync(rootFile)) {
+      const code = `require('${rootFile}')(${JSON.stringify(_config)})`;
+      const p = exec('node', ['-e', code], { 'stdio': 'inherit' });
+      p.on('error', e => {
+        log.verbose('命令执行失败:', e);
+        handleError(e);
+        process.exit(1);
+      });
+      p.on('exit', c => {
+        log.verbose('命令执行成功:', c);
+        process.exit(c);
+      });
+    } else {
+      throw new Error('入口文件不存在，请重试！');
+    }
   } catch (e) {
     log.error(e.message);
   }
 }
 
+
+function handleError(e) {
+  if (args.debug) {
+    log.error('Error:', e.stack);
+  } else {
+    log.error('Error:', e.message);
+  }
+  process.exit(1);
+}
 
 
 
