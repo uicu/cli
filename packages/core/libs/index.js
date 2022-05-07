@@ -30,6 +30,9 @@ async function cli() {
       registerCommand();
     } catch (e) {
       log.error(e.message);
+      if (program.debug) {
+        console.log(e);
+      }
     }
 }
 async function prepare() {
@@ -137,11 +140,12 @@ function registerCommand() {
     .command('init [type]')
     .description('项目初始化')
     .option('--packagePath <packagePath>', '手动指定init包路径')
+    .option('--targetPath <targetPath>', '手动指定初始化目标路径')
     .option('--force', '覆盖当前路径文件（谨慎使用）')
-    .action(async (type, { packagePath, force }) => {
+    .action(async (type, { packagePath, force, targetPath }) => {
       const packageName = '@uicu/cli-init';
       const packageVersion = '0.0.4';
-      await execCommand({ packagePath, packageName, packageVersion }, { type, force });
+      await execCommand({ packagePath, packageName, packageVersion }, { type, force, targetPath });
     });
   
   // 开启debug模式
